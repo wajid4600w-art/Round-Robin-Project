@@ -24,19 +24,22 @@ public class Main {
             }
         }
 
-        // --- Get time quantum ---
-        int quantum = 0;
-        while (quantum <= 0) {
-            System.out.print("Enter time quantum: ");
+       // --- Get time quantum ---
+        // 0 = Non-Preemptive (each process runs to completion)
+        // any positive number = Preemptive (processes share CPU in time slices)
+        int quantum = -1;
+        while (quantum < 0) {
+            System.out.print("Enter time quantum (0 = Non-Preemptive, 1+ = Preemptive): ");
             if (input.hasNextInt()) {
                 quantum = input.nextInt();
-                if (quantum <= 0)
-                    System.out.println("  Error: Quantum must be greater than 0. Try again.");
+                if (quantum < 0)
+                    System.out.println("  Error: Quantum cannot be negative. Try again.");
             } else {
                 System.out.println("  Error: Please enter a valid number.");
                 input.next();
             }
         }
+ 
 
         // --- Enter process details ---
         System.out.println();
@@ -77,9 +80,15 @@ public class Main {
             System.out.println("  P" + i + " added.\n");
         }
 
-        // --- Run the scheduler ---
-        RoundRobin.run(queue, quantum, numProcesses);
-
+             // --- Auto-select mode based on quantum ---
+        if (quantum == 0) {
+            System.out.println("Quantum is 0 -> Running Non-Preemptive scheduling.");
+            RoundRobin.runNonPreemptive(queue, numProcesses);
+        } else {
+            System.out.println("Quantum is " + quantum + " -> Running Preemptive scheduling.");
+            RoundRobin.runPreemptive(queue, quantum, numProcesses);
+        }
+ 
         input.close();
     }
 }
