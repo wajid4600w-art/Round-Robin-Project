@@ -19,9 +19,9 @@ public class Main {
             if (input.hasNextInt () ) {
                 numProcesses = input.nextInt();
                 if (numProcesses <= 0)
-                    System.out.println("  Error !!! :- Must be greater than 0. Try again Please.");
+                    System.out.println("  Error :- Must be greater than 0. Try again .");
             } else {
-                System.out.println("          Error!!! :- Please enter a valid number.");
+                System.out.println("   Error :- Please enter a valid number.");
                 input.next();
             }
         }
@@ -30,14 +30,14 @@ public class Main {
     
         int quantum = -1;
         while (quantum < 0 ){
-            System.out.print("Enter time quantum (0 = Non Preemptive , 1+ =Preemptive ) :_ ");
+            System.out.print("Enter time quantum (0 = Non Preemptive , 1+ = Preemptive ) : ");
             
             if (input.hasNextInt()) {
                 quantum = input.nextInt();
                 if (quantum < 0)
-                    System.out.println("  Error!! : Quantum cannot be negative. Try again.");
+                    System.out.println("  Error : Quantum cannot be negative. Try again.");
             } else {
-                System.out.println("  Error!!!: Please enter a valid number.");
+                System.out.println("  Error: Please enter a valid number.");
                 input.next();
             }
         }
@@ -48,7 +48,7 @@ public class Main {
         QueueArray< Process > queue = new QueueArray<>( numProcesses );
 
         for (int i = 0; i < numProcesses; i++) {
-            System.out.println("--- Process " + i + " --->");
+            System.out.println("--- Process " + i + " ---");
 
             // Burst time
             int burst = 0;
@@ -58,9 +58,9 @@ public class Main {
                 if (input.hasNextInt()) {
                     burst = input.nextInt();
                     if (burst <= 0)
-                        System.out.println("  Error!!: Burst time must be greater than 0.");
+                        System.out.println("  Error: Burst time must be greater than 0.");
                 } else {
-                    System.out.println("  Error!!: Please enter a valid number.");
+                    System.out.println("  Error: Please enter a valid number.");
                     input.next();
                 }
             }
