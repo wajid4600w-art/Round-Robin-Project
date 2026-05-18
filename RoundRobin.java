@@ -2,6 +2,9 @@ package org.example;
 
 public class RoundRobin {
 
+    private static double total_waiting_time;
+    private static double total_turnaround_time;
+    private static int procCounter;
     public static void run(QueueArray<Process> queue, int quantum, int totalProcesses) {
         System.out.println("\n========================================");
         System.out.println("   Round Robin Scheduling (Quantum = " + quantum + ")");
@@ -9,6 +12,9 @@ public class RoundRobin {
 
         int currentTime = 0;
         int completed = 0;
+
+        double turnaround[] = new double[totalProcesses];
+        double waiting[] = new double[totalProcesses];
 
         while (completed < totalProcesses) {
             Process p = queue.dequeue();
@@ -31,6 +37,8 @@ public class RoundRobin {
                 p.setTurnaroundTime(currentTime - p.getArrivalTime());
                 p.setWaitingTime(p.getTurnaroundTime() - p.getBurstTime());
                 completed++;
+                turnaround[p.getPid()] = p.getTurnaroundTime();
+                waiting[p.getPid()] = p.getWaitingTime();
                 System.out.printf("Time %3d | P%d FINISHED  | Turnaround: %d | Waiting: %d%n",
                         currentTime, p.getPid(), p.getTurnaroundTime(), p.getWaitingTime());
             } else {
@@ -40,11 +48,23 @@ public class RoundRobin {
                 System.out.printf("Time %3d | P%d PREEMPTED | Remaining: %d%n",
                         currentTime, p.getPid(), p.getRemainingTime());
             }
+
         }
+        for (int i = 0; i < totalProcesses; i++) {
+            total_turnaround_time += turnaround[i];
+            total_waiting_time += waiting[i];
+        }
+        procCounter = totalProcesses;
+
+
+        double average_turnaround_time = total_turnaround_time / procCounter;
+        double average_waiting_time = total_waiting_time / procCounter;
 
         System.out.println("\n========================================");
         System.out.println("        Scheduling Complete");
         System.out.println("Total time: " + currentTime);
+        System.out.println("Average turnaround time: " + average_turnaround_time);
+        System.out.println("Average waiting time: " + average_waiting_time);
         System.out.println("========================================");
     }
 }

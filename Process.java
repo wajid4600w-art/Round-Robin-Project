@@ -38,6 +38,10 @@ public class Process {
     public int getTurnaroundTime()           { return turnaroundTime; }
     public void setTurnaroundTime(int t)     { this.turnaroundTime = t; }
 
+    public static int getProcCounter() {
+        return procCounter;
+    }
+
     @Override
     public String toString() {
         return String.format("P%d [Burst: %d, Arrival: %d, State: %s]",
